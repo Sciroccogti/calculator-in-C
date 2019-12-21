@@ -34,11 +34,33 @@ int Str2Int(char str[9])
 // 将整数转为 9-1 位字符串
 char *Int2Str(int num, char *ret)
 {
-    int i;
+    int i, isNegative = 0;
     ret[8] = '\0';
+
+    if (num < 0)
+    {
+        num = -num;
+        isNegative = 1;
+    }
+
     for (i = 7; i >= 0; i--)
     {
-        ret[i] = num % 10 + '0';
+        if (!num)
+        {
+            if (isNegative)
+            {
+                ret[i] = '-';
+                isNegative = 0;
+            }
+            else
+            {
+                ret[i] = '_';
+            }
+        }
+        else
+        {
+            ret[i] = num % 10 + '0';
+        }
         num /= 10;
     }
     return ret;
@@ -60,7 +82,7 @@ int Negative(char *str, int num)
     }
     else if (str[i + 1] == '-')
     {
-        str[i+1] = '_';
+        str[i + 1] = '_';
         num = -num;
     }
 

@@ -64,6 +64,7 @@ int main()
         else if (buff == '-' && mode) // 输入数字时输入负号
         {
             num[mode > 0 ? mode : 0] = Negative(queue, num[mode > 0 ? mode : 0]);
+            num[mode > 0 ? mode : 0] = Str2Int(queue);
         }
         else // 读到符号
         {
