@@ -1,6 +1,6 @@
 #ifndef DATA_H
 #define DATA_H
-
+#include <math.h>
 // 把 9-1 位字符串当作队列，向其后推入一个字符
 void PushQueue(char *queue, char c)
 {
@@ -13,9 +13,10 @@ void PushQueue(char *queue, char c)
 }
 
 // 将 9-1 位字符串转为整数
-int Str2Int(char str[9])
+int Str2Int(char str[9], int dp)
 {
     int ret = 0, i, sign = 1;
+
     for (i = 0; i < 8; i++)
     {
         if (str[i] >= '0' && str[i] <= '9')
@@ -28,42 +29,36 @@ int Str2Int(char str[9])
             sign = -1;
         }
     }
-    return sign * ret / 10;
+
+    return sign * ret / Pow(10, 9 - (dp > 8 ? 8 : dp));
 }
 
-// 将整数转为 9-1 位字符串
-char *Int2Str(int num, char *ret)
+// 将整数转为 9-1 位字符串，返回小数点位置，若溢出则返回-1
+int Int2Str(int num, char *ret)
 {
-    int i, isNegative = 0;
+    // int a = Log(num);
+    int i = 0, isNegative = 0, dp = (int)(log(num + 0.1) / log(10)+1.5);
     ret[8] = '\0';
 
     if (num < 0)
     {
         num = -num;
         isNegative = 1;
+        i++;
+        dp++;
     }
 
-    for (i = 7; i >= 0; i--)
+    if (dp >= 8)
     {
-        if (!num)
-        {
-            if (isNegative)
-            {
-                ret[i] = '-';
-                isNegative = 0;
-            }
-            else
-            {
-                ret[i] = '_';
-            }
-        }
-        else
-        {
-            ret[i] = num % 10 + '0';
-        }
-        num /= 10;
+        return -1;
     }
-    return ret;
+
+    for (; i < 8; i++)
+    {
+        ret[i] = (int)(num / Pow(10, dp - i - 1) + 0.5) % 10 + '0';
+    }
+
+    return dp;
 }
 
 // 将 9-1 位字符串取相反数
