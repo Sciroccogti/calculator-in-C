@@ -15,20 +15,24 @@ void PushQueue(char *queue, char c)
 // 将 9-1 位字符串转为整数
 int Str2Int(char str[9])
 {
-    int ret = 0, i;
+    int ret = 0, i, sign = 1;
     for (i = 0; i < 8; i++)
     {
-        if (str[i] != '_')
+        if (str[i] >= '0' && str[i] <= '9')
         {
             ret += str[i] - 48;
             ret *= 10;
         }
+        else if (str[i] == '-')
+        {
+            sign = -1;
+        }
     }
-    return ret / 10;
+    return sign * ret / 10;
 }
 
 // 将整数转为 9-1 位字符串
-char * Int2Str(int num, char * ret)
+char *Int2Str(int num, char *ret)
 {
     int i;
     ret[8] = '\0';
@@ -38,6 +42,29 @@ char * Int2Str(int num, char * ret)
         num /= 10;
     }
     return ret;
+}
+
+// 将 9-1 位字符串取相反数
+int Negative(char *str, int num)
+{
+    int i = 0;
+    while (str[i + 1] == '_')
+    {
+        i++;
+    }
+
+    if (num > 0) // 正数
+    {
+        str[i] = '-';
+        num = -num;
+    }
+    else if (str[i + 1] == '-')
+    {
+        str[i+1] = '_';
+        num = -num;
+    }
+
+    return num;
 }
 
 #endif
