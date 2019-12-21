@@ -14,7 +14,7 @@ int main()
     char queue[9] = "________"; // 待显示字符
     int count = 0;              // 记录输入位数
     int mode = -1;              // 输入模式 -1:num1, 0:operand, 1:num2
-    int num[3] = {0, 0, 0};
+    double num[3] = {0, 0, 0};
     int jump = 0; // 跳过最后的打印
     int dp = 9;   // 小数点位置
 
@@ -57,6 +57,18 @@ int main()
                     break;
                 case '/':
                     num[2] = num[0] / num[1];
+                    break;
+                case 's':
+                    num[2] = sin(num[0]);
+                    break;
+                case 'c':
+                    num[2] = cos(num[0]);
+                    break;
+                case 'l':
+                    num[2] = log(num[1]) / log(num[0]);
+                    break;
+                case 'p':
+                    num[2] = pow(num[0], num[1]);
                     break;
                 default:
                     break;
