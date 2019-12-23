@@ -4,7 +4,7 @@
  * __GNUC        => linux 平台特殊操作
  * __MSC_VER    => window 平台特殊操作
  */
-#ifdef __GNUC__  // 下面是依赖GCC编译器实现
+#ifdef __linux__  // 下面是依赖GCC编译器实现
 
 #include <termio.h>
 /*
@@ -31,7 +31,7 @@ sh_getch(void) {
     return cr;
 }
 
-#elif _MSC_VER // 下面是依赖Visual Studio编译器实现
+#elif _WIN32 // 下面是依赖Visual Studio编译器实现
 
 #include <conio.h>
 
