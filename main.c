@@ -21,7 +21,13 @@ int main()
     while (buff = getch())
     {
         count++;
-        if (buff == '\b') // 退格
+        if (buff == 'r') // r，即reset
+        {
+            mode = -1;
+            strcpy(queue, "________");
+            dp = 9;
+        }
+        else if (buff == '\b') // 退格
         {
             if (mode)
             {
@@ -91,7 +97,7 @@ int main()
                 {
                     strcpy(queue, "Error___");
                 }
-                
+
                 display(queue, dp);
                 strcpy(queue, "________");
                 jump = 1; // 跳过最后的输出
