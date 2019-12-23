@@ -5,8 +5,6 @@
 #include "data.h"
 #include "led.h"
 
-// 要显示的字符：0-9，负号-，空格_，小数点.
-
 int main()
 {
     char buff;                  // 读入字符
@@ -89,6 +87,11 @@ int main()
                 }
 
                 dp = Int2Str(num[2], queue);
+                if (dp == -1) // 溢出
+                {
+                    strcpy(queue, "Error___");
+                }
+                
                 display(queue, dp);
                 strcpy(queue, "________");
                 jump = 1; // 跳过最后的输出
