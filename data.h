@@ -47,7 +47,7 @@ double Str2Num(char str[9], int dp)
 int Num2Str(double num, char *str)
 {
     // int a = Log(num);
-    int i = 0, isNegative = 0, dp = (int)(log(abs(num) + 0.1) / log(10) + 1.5);
+    int i = 0, isNegative = 0, dp = (int)(log(fabs(num) + 0.1) / log(10) + 1.5);
     str[8] = '\0';
 
     if (num < 0)
@@ -64,7 +64,7 @@ int Num2Str(double num, char *str)
         return -1;
     }
 
-    if (abs(num) < 1) // 首位为0
+    if (fabs(num) < 1) // 首位为0
     {
         str[i++] = '0';
         dp++;
