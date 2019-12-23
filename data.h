@@ -12,8 +12,18 @@ void PushQueue(char *queue, char c)
     queue[7] = c;
 }
 
-// 将 9-1 位字符串转为整数
-int Str2Int(char str[9], int dp)
+// 把 9-1 位字符串当作队列，向弹出其末尾一个字符
+void PopQueue(char *queue)
+{
+    int i;
+    for (i = 7; i > 0; i--)
+    {
+        queue[i] = queue[i - 1];
+    }
+}
+
+// 将 9-1 位字符串转为数字
+double Str2Int(char str[9], int dp)
 {
     int ret = 0, i, sign = 1;
 
@@ -34,10 +44,10 @@ int Str2Int(char str[9], int dp)
 }
 
 // 将整数转为 9-1 位字符串，返回小数点位置，若溢出则返回-1
-int Int2Str(int num, char *ret)
+int Int2Str(double num, char *ret)
 {
     // int a = Log(num);
-    int i = 0, isNegative = 0, dp = (int)(log(num + 0.1) / log(10)+1.5);
+    int i = 0, isNegative = 0, dp = (int)(log(num + 0.1) / log(10) + 1.5);
     ret[8] = '\0';
 
     if (num < 0)

@@ -23,7 +23,20 @@ int main()
     while (buff = getch())
     {
         count++;
-        if (buff >= '0' && buff <= '9') // 读到数字
+        if (buff == '\b') // 退格
+        {
+            if (mode)
+            {
+                PopQueue(queue);
+                dp++;
+                num[mode > 0 ? mode : 0] = Str2Int(queue, dp);
+            }
+            else
+            {
+                operand = '\0';
+            }
+        }
+        else if (buff >= '0' && buff <= '9') // 读到数字
         {
             if (dp < 9)
             {
@@ -35,9 +48,10 @@ int main()
         else if (buff == '\n' || buff == '\r') // 一个元素输入完毕
         {
 
-            if (mode) // 将queue转为int
+            if (mode) // 清空输出
             {
                 strcpy(queue, "________");
+                dp = 9;
             }
 
             mode++;
