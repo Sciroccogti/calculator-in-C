@@ -64,6 +64,12 @@ int Num2Str(double num, char *str)
         return -1;
     }
 
+    if (abs(num) < 1) // 首位为0
+    {
+        str[i++] = '0';
+        dp++;
+    }
+
     for (; i < 8; i++)
     {
         str[i] = (int)(num / Pow(10, dp - i - 1) + 0.5) % 10 + '0';
