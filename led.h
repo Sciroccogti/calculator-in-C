@@ -8,7 +8,7 @@ void display(char str[9], int dp)
 {
     int i;
     printf("\b \r");
-    if (dp == -1)
+    if (dp == -1 || !dp)
     {
         dp = 9;
     }

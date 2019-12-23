@@ -23,7 +23,7 @@ void PopQueue(char *queue)
 }
 
 // 将 9-1 位字符串转为数字
-double Str2Int(char str[9], int dp)
+double Str2Num(char str[9], int dp)
 {
     int ret = 0, i, sign = 1;
 
@@ -44,11 +44,11 @@ double Str2Int(char str[9], int dp)
 }
 
 // 将整数转为 9-1 位字符串，返回小数点位置，若溢出则返回-1
-int Int2Str(double num, char *ret)
+int Num2Str(double num, char *str)
 {
     // int a = Log(num);
-    int i = 0, isNegative = 0, dp = (int)(log(num + 0.1) / log(10) + 1.5);
-    ret[8] = '\0';
+    int i = 0, isNegative = 0, dp = (int)(log(abs(num) + 0.1) / log(10) + 1.5);
+    str[8] = '\0';
 
     if (num < 0)
     {
@@ -56,6 +56,7 @@ int Int2Str(double num, char *ret)
         isNegative = 1;
         i++;
         dp++;
+        str[0] = '-';
     }
 
     if (dp >= 8)
@@ -65,7 +66,7 @@ int Int2Str(double num, char *ret)
 
     for (; i < 8; i++)
     {
-        ret[i] = (int)(num / Pow(10, dp - i - 1) + 0.5) % 10 + '0';
+        str[i] = (int)(num / Pow(10, dp - i - 1) + 0.5) % 10 + '0';
     }
 
     return dp;

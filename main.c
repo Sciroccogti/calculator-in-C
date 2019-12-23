@@ -12,7 +12,7 @@ int main()
     char queue[9] = "________"; // 待显示字符
     int count = 0;              // 记录输入位数
     int mode = -1;              // 输入模式 -1:num1, 0:operand, 1:num2
-    double num[3] = {0, 0, 0};
+    double num[3] = {0, 0, 0}, memory = 0;
     int jump = 0; // 跳过最后的打印
     int dp = 9;   // 小数点位置
 
@@ -33,21 +33,21 @@ int main()
             {
                 PopQueue(queue);
                 dp++;
-                num[mode > 0 ? mode : 0] = Str2Int(queue, dp);
+                num[mode > 0 ? mode : 0] = Str2Num(queue, dp);
             }
             else
             {
                 operand = '\0';
             }
         }
-        else if (buff >= '0' && buff <= '9') // 读到数字
+        else if (buff >= '0' && buff <= '9' && mode) // 读到数字
         {
             if (dp < 9)
             {
                 dp--;
             }
             PushQueue(queue, buff);
-            num[mode > 0 ? mode : 0] = Str2Int(queue, dp);
+            num[mode > 0 ? mode : 0] = Str2Num(queue, dp);
         }
         else if (buff == '\n' || buff == '\r') // 一个元素输入完毕
         {
@@ -92,7 +92,7 @@ int main()
                     break;
                 }
 
-                dp = Int2Str(num[2], queue);
+                dp = Num2Str(num[2], queue);
                 if (dp == -1) // 溢出
                 {
                     strcpy(queue, "Error___");
@@ -108,13 +108,32 @@ int main()
         else if (buff == '-' && mode) // 输入数字时输入负号
         {
             num[mode > 0 ? mode : 0] = Negative(queue, num[mode > 0 ? mode : 0]);
-            num[mode > 0 ? mode : 0] = Str2Int(queue, dp);
+            num[mode > 0 ? mode : 0] = Str2Num(queue, dp);
         }
         else if (buff == '.' && mode) // 输入数字时输入小数点
         {
             dp = 8;
         }
-        else // 读到符号
+        else if (buff == 'z') // z，即MC
+        {
+            memory = 0;
+        }
+        else if (buff == 'x' && mode) // x，即MR
+        {
+            num[mode > 0 ? mode : 0] = memory;
+            dp = Num2Str(num[mode > 0 ? mode : 0], queue);
+        }
+        else if (buff == 'c') // c, 即M-
+        {
+            // -1 -> 2, 0 -> 0, 1 -> 1
+            memory -= num[mode < 0 ? 2 : mode];
+        }
+        else if (buff == 'v') // v, 即M+
+        {
+            // -1 -> 2, 0 -> 0, 1 -> 1
+            memory += num[mode < 0 ? 2 : mode];
+        }
+        else if (!mode) // 读到符号
         {
             operand = buff;
         }
