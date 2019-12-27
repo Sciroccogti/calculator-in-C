@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <conio.h> // getch()
+#include "getch.h" // getch()
 #include <string.h>
 #include "mymath.h"
 #include "data.h"
@@ -18,10 +18,15 @@ int main()
 
     display(queue, dp);
 
-    while (buff = getch())
+    while (buff = sh_getch())
     {
         count++;
-        if (buff == 'r') // r，即reset
+	if (buff == 3 || buff == 26) // ctrl+c or ctrl+z
+	{
+	    printf("\n");
+	    return 0;
+	} 
+        else if (buff == 'r') // r，即reset
         {
             mode = -1;
             strcpy(queue, "________");
@@ -114,21 +119,21 @@ int main()
         {
             dp = 8;
         }
-        else if (buff == 'z') // z，即MC
+        else if (buff == 'v') // v，即MC
         {
             memory = 0;
         }
-        else if (buff == 'x' && mode) // x，即MR
+        else if (buff == 'b' && mode) // b，即MR
         {
             num[mode > 0 ? mode : 0] = memory;
             dp = Num2Str(num[mode > 0 ? mode : 0], queue);
         }
-        else if (buff == 'c') // c, 即M-
+        else if (buff == 'n') // n, 即M-
         {
             // -1 -> 2, 0 -> 0, 1 -> 1
             memory -= num[mode < 0 ? 2 : mode];
         }
-        else if (buff == 'v') // v, 即M+
+        else if (buff == 'm') // m, 即M+
         {
             // -1 -> 2, 0 -> 0, 1 -> 1
             memory += num[mode < 0 ? 2 : mode];
