@@ -3,7 +3,7 @@
 #include <string.h>
 #include "mymath.h"
 #include "data.h"
-#include "led.h"
+#include "stcled.h"
 
 int main()
 {
@@ -15,17 +15,27 @@ int main()
     double num[3] = {0, 0, 0}, memory = 0;
     int jump = 0; // 跳过最后的打印
     int dp = 9;   // 小数点位置
+    unsigned temp;
+    unsigned short nAdc;
+    EA = 1;  //开中断
+    EX0 = 1; //开外部中断0
+    EX1 = 1; //开外部中断1
+    IT0 = 1; //外部中断0设为脉冲负跳变有效
+    IT1 = 1; //外部中断1设为脉冲负跳变有效
+    change(ID);
+    P1ASF = 0x10;     //P1.4做ADC
+    ADC_CONTR = 0xE0; //90T, ADC power on
 
     display(queue, dp);
 
     while (buff = sh_getch())
     {
         count++;
-	if (buff == 3 || buff == 26) // ctrl+c or ctrl+z
-	{
-	    printf("\n");
-	    return 0;
-	} 
+        if (buff == 3 || buff == 26) // ctrl+c or ctrl+z
+        {
+            printf("\n");
+            return 0;
+        }
         else if (buff == 'r') // r，即reset
         {
             mode = -1;
