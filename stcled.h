@@ -155,6 +155,7 @@ void display(char str[9], int dp)
         }
     }
     change(ID);
+    display_stc();
 }
 
 #endif
