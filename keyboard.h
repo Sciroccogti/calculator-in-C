@@ -68,6 +68,31 @@ char sh_getch()
                 break;
             }
         }
+        if (ret > 9) // 不是数字
+        {
+            switch (ret)
+            {
+            default:
+            case 10:
+                ret = '.';
+                break;
+            case 11:
+                ret = '\n';
+                break;
+            case 12:
+                ret = '+';
+                break;
+            case 13:
+                ret = '-';
+                break;
+            case 14:
+                ret = '*';
+                break;
+            case 15:
+                ret = '/';
+                break;
+            }
+        }
     }
     else // 若矩阵键盘无信号，监听ADC键盘
     {
