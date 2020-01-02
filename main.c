@@ -1,9 +1,11 @@
 #include <stdio.h>
-#include "getch.h" // getch()
 #include <string.h>
+#include "keyboard.h"
+// #include "getch.h" // sh_getch()
 #include "mymath.h"
 #include "data.h"
 #include "stcled.h"
+//#include "led.h"
 
 int main()
 {
@@ -15,8 +17,8 @@ int main()
     double num[3] = {0, 0, 0}, memory = 0;
     int jump = 0; // 跳过最后的打印
     int dp = 9;   // 小数点位置
-    unsigned temp;
-    unsigned short nAdc;
+    // unsigned temp;
+    // unsigned short nAdc;
     EA = 1;  //开中断
     EX0 = 1; //开外部中断0
     EX1 = 1; //开外部中断1

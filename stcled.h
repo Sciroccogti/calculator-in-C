@@ -15,14 +15,10 @@ unsigned int num[] = {0x003F, 0x0006, 0x005B, 0x004F, 0x0066,
                       0x00BF, 0x0086, 0x00DB, 0x00CF, 0x00E6,
                       0x00ED, 0x00FD, 0x0087, 0x00FF, 0x00EF}; // 0.-9.:20-29
 unsigned int ID[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-unsigned char dig[8] = {0x00fe, 0x00fd, 0x00fb, 0x00f7, 0x00ef, 0x00df, 0x00bf, 0x007f};
 unsigned int datalist[8];
-int count = 0;
 int s = 0;
 
 // 要显示的字符：0-9，负号-，空格_，小数点.，E，r，o。
-
-void scan(int col, unsigned temp);
 
 //软件延时
 void delay(int i)
@@ -78,23 +74,6 @@ void display_stc()
     P_HC595_RCLK = 0;
     Send_595(0xFFFF);
     delay(s);
-}
-
-unsigned short Get_ADC10bitResult(unsigned char channel) //channel = 0~7
-{
-    ADC_RES = 0;
-    ADC_RESL = 0;
-
-    ADC_CONTR = (ADC_CONTR & 0xe0) | 0x08 | channel; //start the ADC
-    _nop_();
-    _nop_();
-    _nop_();
-    _nop_();
-
-    while ((ADC_CONTR & 0x10) == 0)
-        ;               //wait for ADC finish
-    ADC_CONTR &= ~0x10; //清除ADC结束标志
-    return (((unsigned short)ADC_RES << 2) | (ADC_RESL & 3));
 }
 
 int str2led(char ch)
